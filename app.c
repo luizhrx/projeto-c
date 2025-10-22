@@ -2,16 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define TAM 10
+#define TAM 4  // tamanho reduzido do mapa
 
 int main() {
-
-    // LUIZ — Parte de inicialização e lógica principal
+    // 1. LUIZ — Parte de inicialização e lógica principal
     char mapa[TAM][TAM];
     int linhaTesouro, colunaTesouro;
     int opcao, tentativas;
 
-    srand(time(NULL)); // faz o rand() gerar números diferentes a cada execução
+    srand(time(NULL)); // gera números aleatórios diferentes a cada execução
 
     printf("===== CAÇA AO TESOURO =====\n");
 
@@ -22,8 +21,7 @@ int main() {
         scanf("%d", &opcao);
 
         if (opcao == 1) {
-
-            // Luiz - inicializa o mapa e sorteia o tesouro
+            // Luiz inicializa o mapa e sorteia o tesouro
             for (int i = 0; i < TAM; i++) {
                 for (int j = 0; j < TAM; j++) {
                     mapa[i][j] = '~'; // representa água
@@ -36,56 +34,71 @@ int main() {
 
             printf("\nO jogo começou! O tesouro está escondido em algum lugar...\n");
 
-            // ARTHUR — parte de entrada e validação das coordenadas
-            int linha, coluna;
-            int encontrou = 0;
+            // 2. ARTHUR — Parte de interação com o jogador
+            while (1) {
+                int linha, coluna;
 
-            // este é o laço principal do jogo, ele só vai parar quando a variável 'encontrou' mudar para 1
-            while (encontrou == 0) {
+                printf("\nDigite as coordenadas (linha e coluna de 0 a %d): ", TAM - 1);
+                scanf("%d %d", &linha, &coluna);
 
-                // pede a coordenada da linha para o usuário
-                printf("\nDigite a coordenada da linha (0 a %d): ", TAM - 1);
-                scanf("%d", &linha);
-
-                // VALIDAÇÃO DA LINHA:
-                while (linha < 0 || linha >= TAM) {
-                    printf("Linha inválida! Digite novamente (0 a %d): ", TAM - 1);
-                    scanf("%d", &linha);
+                // Validação das entradas
+                if (linha < 0 || linha >= TAM || coluna < 0 || coluna >= TAM) {
+                    printf("Coordenadas inválidas! Tente novamente.\n");
+                    continue;
                 }
 
-                // pede a coordenada da coluna para o usuário.
-                printf("Digite a coordenada da coluna (0 a %d): ", TAM - 1);
-                scanf("%d", &coluna);
-
-                // VALIDAÇÃO DA COLUNA:
-                while (coluna < 0 || coluna >= TAM) {
-                    printf("Coluna inválida! Digite novamente (0 a %d): ", TAM - 1);
-                    scanf("%d", &coluna);
-                }
-
-                // a tentativa só é contada aqui, depois que temos certeza que as coordenadas são válidas
                 tentativas++;
 
-                // VERIFICAÇÃO DO ACERTO:
+                // 3. NETO — Parte de exibição do mapa
+                printf("\n   ");
+                for (int j = 0; j < TAM; j++)
+                    printf("%d ", j);
+                printf("\n");
+
+                for (int i = 0; i < TAM; i++) {
+                    printf("%d  ", i);
+                    for (int j = 0; j < TAM; j++) {
+                        printf("%c ", mapa[i][j]);
+                    }
+                    printf("\n");
+                }
+
+                // LUIZ — Verifica se o jogador achou o tesouro
                 if (linha == linhaTesouro && coluna == colunaTesouro) {
-                    printf("\nParabéns! Você encontrou o tesouro em %d tentativas!\n", tentativas);
+                    mapa[linha][coluna] = 'T'; // marca o tesouro
+                    printf("\n🎉 Parabéns! Você encontrou o tesouro!\n");
 
-                    // atualiza a posição no mapa com 'T' para mostrar onde o tesouro foi encontrado
-                    mapa[linha][coluna] = 'T';
+                    // 4. JÚNIOR — Finalização e resultado do jogo
+                    printf("\nVocê conseguiu encontrar o tesouro em %d tentativas!\n", tentativas);
 
-                    // altera a variável para 1 (verdadeiro), o que fará o laço 'while' principal parar na próxima verificação
-                    encontrou = 1;
+                    // Neto mostra o mapa final com o tesouro revelado
+                    printf("\nMapa final:\n");
+                    printf("\n   ");
+                    for (int j = 0; j < TAM; j++)
+                        printf("%d ", j);
+                    printf("\n");
+
+                    for (int i = 0; i < TAM; i++) {
+                        printf("%d  ", i);
+                        for (int j = 0; j < TAM; j++) {
+                            printf("%c ", mapa[i][j]);
+                        }
+                        printf("\n");
+                    }
+
+                    // Júnior encerra o jogo
+                    printf("\nVoltando ao menu principal...\n");
+                    break;
                 } else {
-                    // se o chute estiver errado
-                    printf("\nNada encontrado nas coordenadas (%d, %d). Tente novamente!\n", linha, coluna);
-
-                    // marca a tentativa no mapa com um 'X' para o jogador saber onde já tentou
-                    mapa[linha][coluna] = 'X';
+                    mapa[linha][coluna] = 'X'; // marca erro
+                    printf("Nada aqui... continue procurando!\n");
                 }
             }
         }
-
     } while (opcao != 2);
+
+    // JÚNIOR — Mensagem final do programa
+    printf("\nObrigado por jogar o Caça ao Tesouro!\n");
 
     return 0;
 }
