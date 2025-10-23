@@ -4,13 +4,20 @@
 O **Caça ao Tesouro** é um jogo simples desenvolvido em **linguagem C**, cujo objetivo é encontrar a posição secreta do tesouro em um mapa.  
 O jogador escolhe coordenadas (linha e coluna) até encontrar o tesouro escondido.
 
-Este projeto foi feito para praticar **lógica de programação**, **estruturas de repetição** e **condições** em C.
+O projeto foi desenvolvido para praticar **lógica de programação**, **estruturas de repetição**, **condições** e o uso da função **rand()** para gerar números aleatórios.
+
+Pra garantir que o tesouro mude de lugar a cada partida, o jogo gera uma **nova semente aleatória** toda vez que ele é iniciado.  
+A gente faz isso usando o comando: srand(time(NULL));
+
+Essa função usa o horário atual do computador como base pra criar a semente
+```c
+
 
 ---
 
 ## 🧠 Integrantes e Funções
 | Integrante | Responsabilidade |
-|-------------|------------------|
+|------------|------------------|
 | **Luiz**   | Lógica principal, inicialização do jogo e verificação do tesouro |
 | **Arthur** | Interação com o jogador (entrada de dados) |
 | **Neto**   | Exibição do mapa durante o jogo |
