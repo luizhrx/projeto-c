@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define TAM 4  // tamanho reduzido do mapa
+
+int main() {
+    char mapa[TAM][TAM];
+    int linhaTesouro, colunaTesouro;
+    int opcao, tentativas;
+
+    srand(time(NULL)); // gera números aleatórios diferentes a cada execução
+
+    printf("===== CAÇA AO TESOURO =====\n");
+
+    do {
+        printf("\n1 - Jogar\n");
+        printf("2 - Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 1) {
+            // Inicializa o mapa
+            for (int i = 0; i < TAM; i++) {
+                for (int j = 0; j < TAM; j++) {
+                    mapa[i][j] = '~'; // representa água
+                }
+            }
+
+            linhaTesouro = rand() % TAM;
+            colunaTesouro = rand() % TAM;
+            tentativas = 0;
+
+            printf("\nO jogo começou! O tesouro está escondido em algum lugar...\n");
+
+            while (1) {
+                int linha, coluna;
+
+                printf("\nDigite as coordenadas (linha e coluna de 0 a %d): ", TAM - 1);
+                scanf("%d %d", &linha, &coluna);
+
+                // Validação
+                if (linha < 0 || linha >= TAM || coluna < 0 || coluna >= TAM) {
+                    printf("Coordenadas inválidas! Tente novamente.\n");
+                    continue;
+                }
+
+                tentativas++;
+
+                // Atualiza o mapa ANTES de mostrar
+                if (linha == linhaTesouro && coluna == colunaTesouro) {
+                    mapa[linha][coluna] = 'T'; // Tesouro encontrado
+                } else {
+                    mapa[linha][coluna] = 'X'; // Tentativa errada
+                }
+
+                // Exibe o mapa atualizado
+                printf("\n   ");
+                for (int j = 0; j < TAM; j++)
+                    printf("%d ", j);
+                printf("\n");
+
+                for (int i = 0; i < TAM; i++) {
+                    printf("%d  ", i);
+                    for (int j = 0; j < TAM; j++) {
+                        printf("%c ", mapa[i][j]);
+                    }
+                    printf("\n");
+                }
+
+                // Verifica vitória
+                if (linha == linhaTesouro && coluna == colunaTesouro) {
+                    printf("\n Parabéns! Você encontrou o tesouro!\n");
+                    printf("Você conseguiu em %d tentativas!\n", tentativas);
+                    printf("\nVoltando ao menu principal...\n");
+                    break;
+                } else {
+                    printf("Nada aqui... continue procurando!\n");
+                }
+            }
+        }
+    } while (opcao != 2);
+
+    printf("\nObrigado por jogar o Caça ao Tesouro!\n");
+
+    return 0;
+}
