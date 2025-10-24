@@ -10,7 +10,7 @@ Pra garantir que o tesouro mude de lugar a cada partida, o jogo gera uma **nova 
 A gente faz isso usando o comando: srand(time(NULL));
 
 Essa função usa o horário atual do computador como base pra criar a semente
-```c
+
 
 
 ---
