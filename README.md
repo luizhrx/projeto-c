@@ -6,6 +6,8 @@ O jogador escolhe coordenadas (linha e coluna) até encontrar o tesouro escondid
 
 O projeto foi desenvolvido para praticar **lógica de programação**, **estruturas de repetição**, **condições** e o uso da função **rand()** para gerar números aleatórios.
 
+## 🎲 Geração de Números Aleatórios
+
 Pra garantir que o tesouro mude de lugar a cada partida, o jogo gera uma **nova semente aleatória** toda vez que ele é iniciado.  
 A gente faz isso usando o comando: srand(time(NULL));
 
